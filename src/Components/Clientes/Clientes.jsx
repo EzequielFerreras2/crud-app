@@ -22,10 +22,10 @@ const Clientes = () => {
 
 
     const columns = [
-        { field: 'Id', headerName: 'ID' },
-        { field: 'NombreCliente', headerName: 'Nombre Cliente' },
-        { field: 'Cedula', headerName: 'Cedula' },
-        { field: 'Membresia', headerName: 'Membresia' } 
+        { field: 'Id', headerName: 'ID' ,width: 70},
+        { field: 'NombreCliente', headerName: 'Nombre Cliente',width: 170 },
+        { field: 'Cedula', headerName: 'Cedula',width: 170 },
+        { field: 'Membresia', headerName: 'Membresia',width: 170 } 
       ];
 
 
@@ -34,7 +34,7 @@ const Clientes = () => {
 
 
     return (
-        <div style={{ height: 700, width: '100%' }}>
+        <div style={{ height: 600, width: '100%' }}>
             <h1>Clientes</h1>
             <hr/>
 
