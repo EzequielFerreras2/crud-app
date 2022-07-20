@@ -79,13 +79,13 @@ const Clientes = () => {
         <div style={{ height: 600, width: '100%' }}>
             <h1>Clientes</h1>
             <hr/>
-
+            <br/>
             <Grid container>
                 <Button variant="contained" color="success" startIcon={<AddIcon />}>
                     Agregar
                 </Button>
             </Grid>
-           
+            <br/>
                 <div style={{ display: 'flex', height: '100%' }}>
                     <div style={{ flexGrow: 1 }}>
                         <DataGrid
