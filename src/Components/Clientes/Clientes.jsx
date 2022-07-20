@@ -35,10 +35,28 @@ const Clientes = () => {
         getCliente();  
     }, []);
 
+
+    /* */
+
+    const [agregarCliente, setAgregarCliente] = useState({
+
+        NombreCliente:"",
+        Cedula:"",
+        Membresia:""
+    });
+
+
+    const handleChange = (e) =>{
+        const {name , value}= e.target;
+        setAgregarCliente( prevState => ({...prevState, [name]: value}));
+        console.log(agregarCliente)
+    }
+
     /*Eventos Click eliminar y Editar  */
     const handleEditClick =( event, cellValue)=>{
 
-        getClientesById(cellValue.row.Id).then( (res) =>{ console.log(res.data)})
+        getClientesById(cellValue.row.Id).then( (res) =>{console.log(res.data)})
+        
 
         console.log("Editando "+cellValue.row.Id)
     };
@@ -53,10 +71,10 @@ const Clientes = () => {
 
     /* Cambio Estado Membresia */
 
-    const handleChangemembresia =(event) =>{
-        setMembresia(event.target.value);
-        console.log(membresia);
-    };
+    // const handleChangemembresia =(event) =>{
+    //     setMembresia(event.target.value);
+    //     console.log(membresia);
+    // };
     
     /*Estado Modal */
     const [agregarModal, setAgregarModal] = useState(false);
@@ -155,7 +173,9 @@ const Clientes = () => {
                         required
                         id="outlined-required"
                         label="Nombre Cliente"
+                        name="NombreCliente"
                         defaultValue=""
+                        onChange={handleChange}
                         />
                         <br/>
                         <br/>
@@ -163,7 +183,9 @@ const Clientes = () => {
                         required
                         id="outlined-required"
                         label="Cedula"
+                        name="Cedula"
                         defaultValue=""
+                        onChange={handleChange}
                         />
                         <br/>
                         <br/>
@@ -173,8 +195,10 @@ const Clientes = () => {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={membresia}
-                            label="Age"
-                            onChange={handleChangemembresia}
+                            name="Membresia"
+                            label="Membresia"
+                            onChange={handleChange}
+                            // onChange={handleChangemembresia()}
                             >
                                 <MenuItem value={'Premium'}>Premium</MenuItem>
                                 <MenuItem value={'Super'}>Super</MenuItem>
