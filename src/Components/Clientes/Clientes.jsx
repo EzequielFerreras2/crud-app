@@ -2,7 +2,11 @@ import React,{useState,useEffect} from 'react';
 import api from '../../Api/api';
 import { ClientesI } from '../../Models/ClientesI';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
 const Clientes = () => {
 
@@ -12,18 +16,23 @@ const Clientes = () => {
         await api.get('/Cliente').then(res => {
             console.log(res.data)
             setCliente(res.data)
-        }) 
-
-        
-    }
-
-    const handleClick =( event, cellValue)=>{
-        console.log(cellValue.row.Id)
-    }
+        })       
+    };
 
     useEffect(() => { 
-          getClientes();  
+        getClientes();  
     }, []);
+
+
+    const handleEditClick =( event, cellValue)=>{
+        console.log("Editando "+cellValue.row.Id)
+    };
+
+    const handleDeleteClick =( event, cellValue)=>{
+        console.log("Eliminando "+ cellValue.row.Id)
+    };
+
+    
 
 
     const columns = [
@@ -35,21 +44,25 @@ const Clientes = () => {
             renderCell:(rowValue) =>{
                 return(
                     <>
-                    <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={(event) => { handleClick(event, rowValue)}}
+                    <IconButton 
+                    color="primary" 
+                    aria-label="upload picture" 
+                    component="label"
+                    onClick={(event) => { handleEditClick(event, rowValue)}}
                     >
-                        Editar
-                    </Button>
+                    <ModeEditOutlineIcon />
+                    </IconButton>
 
-                    <Button
-                    variant='contained'
-                    color='primary'
-
+                    <IconButton 
+                    color="error" 
+                    aria-label="upload picture" 
+                    component="label"
+                    onClick={(event) => { handleDeleteClick(event, rowValue)}}
                     >
-                        Eliminar
-                    </Button>
+                    <DeleteIcon />
+                    </IconButton>
+
+
                     </>
                     
                 )
@@ -67,25 +80,25 @@ const Clientes = () => {
             <h1>Clientes</h1>
             <hr/>
 
-            <div style={{ display: 'flex', height: '100%' }}>
-                <div style={{ flexGrow: 1 }}>
-                    <DataGrid
-                    getRowId={(cliente) => cliente.Id}
-                    rows={cliente}
-                    columns={columns}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    actions={[{
-
-                        icon:'edit',
-                        tooltip:'Editar Artista'
-
-                    }]}
-
-                    />
+            <Grid container>
+                <Button variant="contained" color="success" startIcon={<AddIcon />}>
+                    Agregar
+                </Button>
+            </Grid>
+           
+                <div style={{ display: 'flex', height: '100%' }}>
+                    <div style={{ flexGrow: 1 }}>
+                        <DataGrid
+                        getRowId={(cliente) => cliente.Id}
+                        rows={cliente}
+                        columns={columns}
+                        pageSize={10}
+                        rowsPerPageOptions={[10]}
+                        />
+                    </div>
                 </div>
-            </div>
-
+           
+            
         
         </div>
     );
