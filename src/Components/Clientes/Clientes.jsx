@@ -2,28 +2,38 @@ import React,{useState,useEffect} from 'react';
 import api from '../../Api/api';
 import { ClientesI } from '../../Models/ClientesI';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Modal, TextField,ButtonGroup,Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+
+
 
 const Clientes = () => {
 
+    /*Estado info CLiente */
     const [cliente, setCliente] = useState([]);
 
+    /*Peticion de todos los clientes con Axios */
     const getClientes = async () =>{
         await api.get('/Cliente').then(res => {
-            console.log(res.data)
             setCliente(res.data)
         })       
     };
 
+    /* Ciclo de Vida aplicacion*/
     useEffect(() => { 
         getClientes();  
     }, []);
 
-
+    /*Eventos Click eliminar y Editar  */
     const handleEditClick =( event, cellValue)=>{
         console.log("Editando "+cellValue.row.Id)
     };
@@ -32,15 +42,49 @@ const Clientes = () => {
         console.log("Eliminando "+ cellValue.row.Id)
     };
 
+    /* Estado Membresia*/
+    const [membresia, setMembresia] = useState('');
+
+    /* Cambio Estado Membresia */
+
+    const handleChangemembresia =(event) =>{
+        setMembresia(event.target.value);
+        console.log(membresia);
+    };
     
+    /*Estado Modal */
+    const [agregarModal, setAgregarModal] = useState(false);
+
+    const openAndCloseModalAgregar = () =>{
+
+        setAgregarModal(!agregarModal);
+    }
+    
+    /*Estilo Modal */
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 500,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+      };
+      
 
 
+
+    /*Declaramos columnas de la tabla*/
     const columns = [
         { field: 'Id', headerName: 'ID' ,width: 70},
         { field: 'NombreCliente', headerName: 'Nombre Cliente',width: 170 },
         { field: 'Cedula', headerName: 'Cedula',width: 170 },
         { field: 'Membresia', headerName: 'Membresia',width: 170 } ,
-        { field: 'Acciones',width: 170,
+
+        /* Renderisamos botones en la Tabla */
+        { field: 'Acciones',width: 120,
             renderCell:(rowValue) =>{
                 return(
                     <>
@@ -76,15 +120,75 @@ const Clientes = () => {
 
 
     return (
+        /* */
         <div style={{ height: 600, width: '100%' }}>
             <h1>Clientes</h1>
             <hr/>
             <br/>
+
             <Grid container>
-                <Button variant="contained" color="success" startIcon={<AddIcon />}>
+                <Button 
+                variant="contained" 
+                color="success" 
+                startIcon={<AddIcon />}
+                onClick={()=> openAndCloseModalAgregar()}
+                >
                     Agregar
                 </Button>
+
+                <Modal
+                    open={agregarModal}
+                    onClose={openAndCloseModalAgregar}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    >
+                    <Box sx={style}>
+                        <h3> Agregar Cliente</h3>
+                        <hr/>
+                        <br/>
+                        <TextField
+                        required
+                        id="outlined-required"
+                        label="Nombre Cliente"
+                        defaultValue=""
+                        />
+                        <br/>
+                        <br/>
+                        <TextField
+                        required
+                        id="outlined-required"
+                        label="Cedula"
+                        defaultValue=""
+                        />
+                        <br/>
+                        <br/>
+                        <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Membresia</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={membresia}
+                            label="Age"
+                            onChange={handleChangemembresia}
+                            >
+                                <MenuItem value={'Premium'}>Premium</MenuItem>
+                                <MenuItem value={'Super'}>Super</MenuItem>
+                                <MenuItem value={'Regular'}>Regular</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <br/>
+                        <br/>
+                        <div align =" right">
+                        <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                            <Button color="success">Agregar</Button>
+                            <Button color="error"  onClick={()=> openAndCloseModalAgregar()}>Cancelar</Button>
+                        </ButtonGroup>
+                        </div>
+                    </Box>
+                    </Modal>
+
             </Grid>
+
             <br/>
                 <div style={{ display: 'flex', height: '100%' }}>
                     <div style={{ flexGrow: 1 }}>
