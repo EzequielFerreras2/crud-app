@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {getClientes,getClientesById} from '../../Services/ClientesAPi'
+import { EventRepeat } from '@mui/icons-material';
 
 
 
@@ -48,7 +49,10 @@ const Clientes = () => {
 
     const handleChange = (e) =>{
         const {name , value}= e.target;
+        
         setAgregarCliente( prevState => ({...prevState, [name]: value}));
+        
+        console.log(e)
         console.log(agregarCliente)
     }
 
@@ -71,10 +75,11 @@ const Clientes = () => {
 
     /* Cambio Estado Membresia */
 
-    // const handleChangemembresia =(event) =>{
-    //     setMembresia(event.target.value);
-    //     console.log(membresia);
-    // };
+    const handleChangemembresia =(event) =>{
+        setMembresia(event.target.value);
+        console.log(event)
+        
+    };
     
     /*Estado Modal */
     const [agregarModal, setAgregarModal] = useState(false);
@@ -197,8 +202,7 @@ const Clientes = () => {
                             value={membresia}
                             name="Membresia"
                             label="Membresia"
-                            onChange={handleChange}
-                            // onChange={handleChangemembresia()}
+                            onChange={handleChangemembresia}
                             >
                                 <MenuItem value={'Premium'}>Premium</MenuItem>
                                 <MenuItem value={'Super'}>Super</MenuItem>
