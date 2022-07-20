@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import api from '../../Api/api';
 import { ClientesI } from '../../Models/ClientesI';
 import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material';
 
 const Clientes = () => {
 
@@ -16,6 +17,10 @@ const Clientes = () => {
         
     }
 
+    const handleClick =( event, cellValue)=>{
+        console.log(cellValue.row.Id)
+    }
+
     useEffect(() => { 
           getClientes();  
     }, []);
@@ -25,7 +30,31 @@ const Clientes = () => {
         { field: 'Id', headerName: 'ID' ,width: 70},
         { field: 'NombreCliente', headerName: 'Nombre Cliente',width: 170 },
         { field: 'Cedula', headerName: 'Cedula',width: 170 },
-        { field: 'Membresia', headerName: 'Membresia',width: 170 } 
+        { field: 'Membresia', headerName: 'Membresia',width: 170 } ,
+        { field: 'Acciones',width: 170,
+            renderCell:(rowValue) =>{
+                return(
+                    <>
+                    <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={(event) => { handleClick(event, rowValue)}}
+                    >
+                        Editar
+                    </Button>
+
+                    <Button
+                    variant='contained'
+                    color='primary'
+
+                    >
+                        Eliminar
+                    </Button>
+                    </>
+                    
+                )
+            }
+        }
       ];
 
 
@@ -46,6 +75,13 @@ const Clientes = () => {
                     columns={columns}
                     pageSize={10}
                     rowsPerPageOptions={[10]}
+                    actions={[{
+
+                        icon:'edit',
+                        tooltip:'Editar Artista'
+
+                    }]}
+
                     />
                 </div>
             </div>
