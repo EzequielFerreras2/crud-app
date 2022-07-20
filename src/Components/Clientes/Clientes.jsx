@@ -12,7 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import {getClientes,getClientesById} from '../../Services/ClientesAPi'
 
 
 
@@ -22,23 +22,29 @@ const Clientes = () => {
     const [cliente, setCliente] = useState([]);
 
     /*Peticion de todos los clientes con Axios */
-    const getClientes = async () =>{
-        await api.get('/Cliente').then(res => {
+    const getCliente =  () =>{
+
+        getClientes().then((res) =>{
             setCliente(res.data)
-        })       
+        })
+             
     };
 
     /* Ciclo de Vida aplicacion*/
     useEffect(() => { 
-        getClientes();  
+        getCliente();  
     }, []);
 
     /*Eventos Click eliminar y Editar  */
     const handleEditClick =( event, cellValue)=>{
+
+        getClientesById(cellValue.row.Id).then( (res) =>{ console.log(res.data)})
+
         console.log("Editando "+cellValue.row.Id)
     };
 
     const handleDeleteClick =( event, cellValue)=>{
+
         console.log("Eliminando "+ cellValue.row.Id)
     };
 
@@ -145,7 +151,6 @@ const Clientes = () => {
                     <Box sx={style}>
                         <h3> Agregar Cliente</h3>
                         <hr/>
-                        <br/>
                         <TextField
                         required
                         id="outlined-required"
