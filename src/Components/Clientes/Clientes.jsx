@@ -36,7 +36,7 @@ const Clientes = () => {
 
 
     /* Agregar CLiente */
-    const [agregarCiente, setagregarCiente] = useState([]]);
+    const [agregarCiente, setagregarCiente] = useState({});
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
         console.log('Data: ',data)
