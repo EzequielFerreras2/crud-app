@@ -13,9 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {getClientes,getClientesById} from '../../Services/ClientesAPi'
-import { EventRepeat } from '@mui/icons-material';
-
-
+import { useForm } from "react-hook-form";
 
 const Clientes = () => {
 
@@ -39,22 +37,14 @@ const Clientes = () => {
 
     /* */
 
-    const [agregarCliente, setAgregarCliente] = useState({
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = data => {
+        console.log('Data: ')
+        console.log(data)};
+    
+    
 
-        NombreCliente:"",
-        Cedula:"",
-        Membresia:""
-    });
-
-
-    const handleChange = (e) =>{
-        const {name , value}= e.target;
-        
-        setAgregarCliente( prevState => ({...prevState, [name]: value}));
-        
-        console.log(e)
-        console.log(agregarCliente)
-    }
+    
 
     /*Eventos Click eliminar y Editar  */
     const handleEditClick =( event, cellValue)=>{
@@ -77,7 +67,6 @@ const Clientes = () => {
 
     const handleChangemembresia =(event) =>{
         setMembresia(event.target.value);
-        console.log(event)
         
     };
     
@@ -172,51 +161,54 @@ const Clientes = () => {
                     aria-describedby="modal-modal-description"
                     >
                     <Box sx={style}>
-                        <h3> Agregar Cliente</h3>
-                        <hr/>
-                        <TextField
-                        required
-                        id="outlined-required"
-                        label="Nombre Cliente"
-                        name="NombreCliente"
-                        defaultValue=""
-                        onChange={handleChange}
-                        />
-                        <br/>
-                        <br/>
-                        <TextField
-                        required
-                        id="outlined-required"
-                        label="Cedula"
-                        name="Cedula"
-                        defaultValue=""
-                        onChange={handleChange}
-                        />
-                        <br/>
-                        <br/>
-                        <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Membresia</InputLabel>
-                            <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={membresia}
-                            name="Membresia"
-                            label="Membresia"
-                            onChange={handleChangemembresia}
-                            >
-                                <MenuItem value={'Premium'}>Premium</MenuItem>
-                                <MenuItem value={'Super'}>Super</MenuItem>
-                                <MenuItem value={'Regular'}>Regular</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <br/>
-                        <br/>
-                        <div align =" right">
-                        <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                            <Button color="success">Agregar</Button>
-                            <Button color="error"  onClick={()=> openAndCloseModalAgregar()}>Cancelar</Button>
-                        </ButtonGroup>
-                        </div>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <h3> Agregar Cliente</h3>
+                            <hr/>
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Nombre Cliente"
+                            name="NombreCliente"
+                            defaultValue=""
+                            {...register("NombreCliente")}
+                            />
+                            <br/>
+                            <br/>
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Cedula"
+                            name="Cedula"
+                            defaultValue=""
+                            {...register("Cedula")}
+                            />
+                            <br/>
+                            <br/>
+                            <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Membresia</InputLabel>
+                                <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={membresia}
+                                name="Membresia"
+                                label="Membresia"
+                                {...register("Membresia")}
+                                onChange={handleChangemembresia}
+                                >
+                                    <MenuItem value={'Premium'}>Premium</MenuItem>
+                                    <MenuItem value={'Super'}>Super</MenuItem>
+                                    <MenuItem value={'Regular'}>Regular</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <br/>
+                            <br/>
+                            <div align =" right">
+                            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                                <Button color="success" type="submit" >Agregar</Button>
+                                <Button color="error"  onClick={()=> openAndCloseModalAgregar()}>Cancelar</Button>
+                            </ButtonGroup>
+                            </div>
+                        </form>
                     </Box>
                     </Modal>
 
