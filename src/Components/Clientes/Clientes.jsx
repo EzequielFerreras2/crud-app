@@ -36,12 +36,13 @@ const Clientes = () => {
 
 
     /* Agregar CLiente */
-    const [agregarCiente, setagregarCiente] = useState({});
+    const [agregarCiente, setAgregarCiente] = useState({});
+
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
     const onSubmit = data => {
-        console.log('Data: ',data)
-        
-    
+        setAgregarCiente(data)
+        console.log(data)
     };
     
     
@@ -172,8 +173,9 @@ const Clientes = () => {
                             label="Nombre Cliente"
                             name="NombreCliente"
                             defaultValue=""
-                            {...register("NombreCliente")}
+                            {...register("NombreCliente",{required:true})}
                             />
+                            {errors.NombreCliente?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
                             <TextField
@@ -182,8 +184,9 @@ const Clientes = () => {
                             label="Cedula"
                             name="Cedula"
                             defaultValue=""
-                            {...register("Cedula")}
+                            {...register("Cedula",{required:true})}
                             />
+                            {errors.Cedula?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
                             <FormControl fullWidth>
@@ -194,7 +197,7 @@ const Clientes = () => {
                                 value={membresia}
                                 name="Membresia"
                                 label="Membresia"
-                                {...register("Membresia")}
+                                {...register("Membresia",{required:true})}
                                 onChange={handleChangemembresia}
                                 >
                                     <MenuItem value={'Premium'}>Premium</MenuItem>
@@ -202,6 +205,7 @@ const Clientes = () => {
                                     <MenuItem value={'Regular'}>Regular</MenuItem>
                                 </Select>
                             </FormControl>
+                            {errors.Membresia?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
                             <div align =" right">
