@@ -1,8 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import api from '../../Api/api';
-import { ClientesI } from '../../Models/ClientesI';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Grid, Modal, TextField,ButtonGroup,Typography } from '@mui/material';
+import { Button, Grid, Modal, TextField,ButtonGroup} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,8 +10,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {getClientes,getClientesById} from '../../Services/ClientesAPi'
+import {getClientes, getClientesById, postCliente} from '../../Services/ClientesAPi'
 import { useForm } from "react-hook-form";
+
 
 const Clientes = () => {
 
@@ -36,16 +35,34 @@ const Clientes = () => {
 
 
     /* Agregar CLiente */
-    const [agregarCiente, setAgregarCiente] = useState({});
+    const [agregarCiente, setAgregarCiente] = useState({
+
+        NombreCLiente:"",
+        Cedula:"",
+        Membresia:""
+
+    });
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
+    const agregarClientes = (cli) =>{
+
+        postCliente(cli).then( res =>{
+            console.log(cli)
+            openAndCloseModalAgregar();
+
+        })
+    }
+
     const onSubmit = data => {
-        setAgregarCiente(data)
-        console.log(data)
+        setAgregarCiente(data) 
+        agregarClientes(data); 
+        
     };
-    
-    
+
+
+
+ 
 
     
 
@@ -212,6 +229,7 @@ const Clientes = () => {
                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                                 <Button color="success" type="submit" >Agregar</Button>
                                 <Button color="error"  onClick={()=> openAndCloseModalAgregar()}>Cancelar</Button>
+                                
                             </ButtonGroup>
                             </div>
                         </form>

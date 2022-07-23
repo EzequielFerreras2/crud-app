@@ -9,4 +9,8 @@ export const getClientesById = async (id) =>{
     return await api.get('/Cliente/id:'+id);       
 };
 
+export const postCliente = async (cliente) =>{
+    return await api.post('/Cliente',cliente);  
+}
+
 
