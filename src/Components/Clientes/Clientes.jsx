@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Grid, Modal, TextField,ButtonGroup} from '@mui/material';
+import { Button, Grid, Modal, TextField,ButtonGroup,Alert} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -43,24 +43,46 @@ const Clientes = () => {
 
     });
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: { errors },setValue } = useForm();
 
     const agregarClientes = (cli) =>{
 
-        postCliente(cli).then( res =>{
-            console.log(cli)
-            openAndCloseModalAgregar();
+        try
+        { 
+            
+            postCliente(cli).then( res =>
+            {
+                openAndCloseModalAgregar()
+            })
 
-        })
+            
+
+            alert("Cliente Agregado")
+
+            
+                window.location.reload();
+                openAndCloseAlert()
+           
+
+        }
+
+
+        catch
+        {
+            alert("Error")
+        }
+        
+        
+          
     }
 
-    const onSubmit = data => {
+    const onSubmitAdd = data => {
         setAgregarCiente(data) 
         agregarClientes(data); 
         
     };
 
-
+/* Agregar CLiente */
 
  
 
@@ -69,7 +91,9 @@ const Clientes = () => {
     /*Eventos Click eliminar y Editar  */
     const handleEditClick =( event, cellValue)=>{
 
-        getClientesById(cellValue.row.Id).then( (res) =>{console.log(res.data)})
+        getClientesById(cellValue.row.Id).then( (res) =>{
+            console.log(res.data)
+        })
         
 
         console.log("Editando "+cellValue.row.Id)
@@ -89,6 +113,16 @@ const Clientes = () => {
         setMembresia(event.target.value);
         
     };
+
+    /* Alerta */
+
+    const [alert, setAlert] = useState(false);
+    
+    const openAndCloseAlert = () =>{
+
+        setAlert(!alert);
+    }
+
     
     /*Estado Modal */
     const [agregarModal, setAgregarModal] = useState(false);
@@ -164,6 +198,8 @@ const Clientes = () => {
             <hr/>
             <br/>
 
+            {alert && <Alert onClose={()=>openAndCloseAlert()} severity="success">El usuario Se agregado Correctamente</Alert>}
+
             <Grid container>
                 <Button 
                 variant="contained" 
@@ -181,7 +217,7 @@ const Clientes = () => {
                     aria-describedby="modal-modal-description"
                     >
                     <Box sx={style}>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmit(onSubmitAdd)}>
                             <h3> Agregar Cliente</h3>
                             <hr/>
                             <TextField

@@ -1,16 +1,56 @@
+
 import api from '../Api/api';
 
 
+
+
 export const getClientes = async () =>{
-    return await api.get('/Cliente');       
+
+
+    return (await api.get('/Cliente').catch(function (error) {
+        alert(error.response.data)
+      })   
+      )   
 };
 
 export const getClientesById = async (id) =>{
-    return await api.get('/Cliente/id:'+id);       
+    return (
+        await api.get('/Cliente/id:'+id).catch(function (error) {
+        console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+      alert(error.response.data);
+      console.log(error.toJSON());
+      })   
+      
+      
+    
+    )
 };
 
 export const postCliente = async (cliente) =>{
-    return await api.post('/Cliente',cliente);  
+
+    try{
+
+        return (
+        
+            await api.post('/Cliente',cliente).catch(function (error) {
+           
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          alert(error.response.data);
+          console.log(error.toJSON());
+    
+          })  )
+    }
+    catch{
+
+        alert("error");
+
+    }
+
+    
 }
 
 
