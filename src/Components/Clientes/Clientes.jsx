@@ -10,12 +10,15 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {getClientes, getClientesById, postCliente} from '../../Services/ClientesAPi'
-import { useForm } from "react-hook-form";
+import {getClientes, getClientesById, postCliente,putCliente} from '../../Services/ClientesAPi'
+import { set, useForm } from "react-hook-form";
+import { useParams } from 'react-router-dom';
 
 
 const Clientes = () => {
+    const {id} = useParams();
 
+    
     /*Estado info CLiente */
     const [cliente, setCliente] = useState([]);
 
@@ -68,15 +71,33 @@ const Clientes = () => {
           
     };
 
-    const editClientes =() =>{
+    const [editCliente, setEditCliente] = useState({
 
-        
+        id:"",
+        NombreCliente:"",
+        Cedula:"",
+        Membresia:""
+
+    });
+
+    const editClientes =(id,cliente) =>{
+
+        putCliente(id,cliente).then(res =>{openAndCloseModalEdit()})
+
     }
 
     const onSubmitAdd = data => {
         setAgregarCiente(data) 
         agregarClientes(data); 
         
+    };
+
+    const onSubmitEdit = async (data) => {
+
+        await setEditCliente(data);
+        editClientes(data.id,data)
+        
+
     };
 
 /* Agregar CLiente */
@@ -90,7 +111,12 @@ const Clientes = () => {
 
         openAndCloseModalEdit()
         getClientesById(cellValue.row.Id).then( (res) =>{
-            console.log(res.data)
+        
+            setValue("id", res.data.Id)
+            setValue("NombreCliente", res.data.NombreCliente)
+            setValue("Cedula", res.data.Cedula)
+            setValue("Membresia", res.data.Membresia)
+            
         })
         
 
@@ -214,7 +240,7 @@ const Clientes = () => {
                 >
                     Agregar
                 </Button>
-
+{/* 
                 <Modal
                     open={agregarModal}
                     onClose={openAndCloseModalAgregar}
@@ -275,10 +301,73 @@ const Clientes = () => {
                             </div>
                         </form>
                     </Box>
+                    </Modal> */}
+
+
+                    <Modal
+                    open={editModal}
+                    onClose={openAndCloseModalEdit}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    >
+                    <Box sx={style}>
+                        <form onSubmit={handleSubmit(onSubmitEdit)}>
+                        <h3> Editar Cliente</h3>
+                            <hr/>
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Nombre Cliente"
+                            name="NombreCliente"
+                            defaultValue=""
+                            {...register("NombreCliente",{required:true})}
+                            />
+                            
+                            <br/>
+                            <br/>
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Cedula"
+                            name="Cedula"
+                            defaultValue=""
+                            {...register("Cedula",{required:true})}
+                            />
+                            
+                            <br/>
+                            <br/>
+                            <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Membresia</InputLabel>
+                                <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={membresia}
+                                name="Membresia"
+                                label="Membresia"
+                                {...register("Membresia",{required:true})}
+                                onChange={handleChangemembresia}
+                                >
+                                    <MenuItem value={'Premium'}>Premium</MenuItem>
+                                    <MenuItem value={'Super'}>Super</MenuItem>
+                                    <MenuItem value={'Regular'}>Regular</MenuItem>
+                                </Select>
+                            </FormControl>
+                            
+                            <br/>
+                            <br/>
+                            <div align =" right">
+                            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                                <Button color="success" type="submit" >Editar</Button>
+                                <Button color="error"  onClick={()=> openAndCloseModalEdit()}>Cancelar</Button>
+                                
+                            </ButtonGroup>
+                            </div>
+                        
+                        </form>
+                            
+                    </Box>
                     </Modal>
-
-
-                    
+ 
 
             </Grid>
 

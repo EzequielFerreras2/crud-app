@@ -15,7 +15,7 @@ export const getClientes = async () =>{
 
 export const getClientesById = async (id) =>{
     return (
-        await api.get('/Cliente/id:'+id).catch(function (error) {
+        await api.get(`/Cliente/Id:`+id).catch(function (error) {
         console.log(error.response.data);
       console.log(error.response.status);
       console.log(error.response.headers);
@@ -54,9 +54,11 @@ export const putCliente = async (id,cliente) =>
  try {   
         return(
 
-            await api.put('/Cliente/id:'+id,cliente).catch(function (error) {alert(error.response.data);})  
+            await api.put('/Cliente/id:'+id,cliente).catch(function (error) { console.log("hola",cliente)   })
+            
         );
     
+       
     } 
 
     catch{
@@ -64,5 +66,7 @@ export const putCliente = async (id,cliente) =>
         alert("error");
 
     }
+
+    
 };
 
