@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Grid, Modal, TextField,ButtonGroup,Alert} from '@mui/material';
+import { Button, Grid, Modal, TextField,ButtonGroup} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,14 +12,11 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {getClientes, getClientesById, postCliente,putCliente} from '../../Services/ClientesAPi'
 import { useForm } from "react-hook-form";
-import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Clientes = () => {
-    const {id} = useParams();
 
-    
     /*Estado info CLiente */
     const [cliente, setCliente] = useState([]);
 
@@ -47,7 +44,7 @@ const Clientes = () => {
 
     });
 
-    const { register, handleSubmit, watch, formState: { errors },setValue } = useForm();
+    const { register, handleSubmit,  formState: { errors },setValue } = useForm();
 
     const agregarClientes = (cli) =>{
 
@@ -56,7 +53,7 @@ const Clientes = () => {
             postCliente(cli).then( res =>
             {
                 openAndCloseModalAgregar()
-                notify("Cliente Agregado Correcto!")
+                notifySuccess("Cliente Agregado Correcto!")
                 console.log("Cliente Agregado Correcto!")
             })
             
@@ -87,7 +84,7 @@ const Clientes = () => {
 
         putCliente(id,cliente).then(res =>{
         openAndCloseModalEdit()
-        notify("Cliente Editado Correcto!")
+        notifySuccess("Cliente Editado Correcto!")
         console.log("Cliente Editado Correctamente")
         
         })
@@ -149,14 +146,16 @@ const Clientes = () => {
 
     /* Alerta */
 
-    const notify = (text) => toast(text);
+    const notifySuccess = (text) => toast.success(text, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });;
 
-    const [alert, setAlert] = useState(false);
-    
-    const openAndCloseAlert = () =>{
-
-        setAlert(!alert);
-    }
 
     
     /*Estado Modal */
