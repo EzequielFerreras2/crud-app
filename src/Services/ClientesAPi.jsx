@@ -45,3 +45,7 @@ export const putCliente = async (id,cliente) =>
 };
 
 /*Eliminar los Cliente*/
+export const DeleteClientes = async (id) =>{
+
+    return (await api.delete(`/Cliente/Id:`+id).catch(function (error) {alert(error.response.data);}) )
+};

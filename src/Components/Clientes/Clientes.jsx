@@ -17,10 +17,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Clientes = () => {
 
-    /*Estado info CLiente */
+/*Estado info CLiente */
     const [cliente, setCliente] = useState([]);
 
-    /*Peticion de todos los clientes con Axios */
+/*Peticion de todos los clientes con Axios */
     const getCliente =  () =>{
 
         getClientes().then((res) =>{
@@ -29,13 +29,13 @@ const Clientes = () => {
              
     };
 
-    /* Ciclo de Vida aplicacion*/
+/* Ciclo de Vida aplicacion*/
     useEffect(() => { 
         getCliente();  
     }, []);
 
 
-    /* Agregar CLiente */
+/* Agregar CLiente */
     const [agregarCiente, setAgregarCiente] = useState({
 
         NombreCLiente:"",
@@ -70,7 +70,9 @@ const Clientes = () => {
         
           
     };
+/* Agregar CLiente */
 
+/* Editar CLiente */
     const [editCliente, setEditCliente] = useState({
 
         id:"",
@@ -105,14 +107,14 @@ const Clientes = () => {
         
 
     };
+/* Editar CLiente */
 
-/* Agregar CLiente */
 
- 
+/* Eliminar CLiente */
 
-    
+/* Eliminar CLiente */  
 
-    /*Eventos Click eliminar y Editar  */
+/*Eventos Click eliminar y Editar  */
     const handleEditClick =( event, cellValue)=>{
 
         openAndCloseModalEdit()
@@ -130,21 +132,33 @@ const Clientes = () => {
     };
 
     const handleDeleteClick =( event, cellValue)=>{
+        openAndCloseModalDelete()
 
+        getClientesById(cellValue.row.Id).then( (res) =>{
+        
+
+            
+        })
+        
         console.log("Eliminando "+ cellValue.row.Id)
     };
 
-    /* Estado Membresia*/
-    const [membresia, setMembresia] = useState('');
+/*Eventos Click eliminar y Editar  */
 
-    /* Cambio Estado Membresia */
+/* Estado Membresia*/
+    const [membresia, setMembresia] = useState('');
+/* Estado Membresia*/
+
+
+/* Cambio Estado Membresia */
 
     const handleChangemembresia =(event) =>{
         setMembresia(event.target.value);
         
     };
+/* Cambio Estado Membresia */
 
-    /* Alerta */
+/* Alerta */
 
     const notifySuccess = (text) => toast.success(text, {
         position: "top-right",
@@ -156,24 +170,33 @@ const Clientes = () => {
         progress: undefined,
         });;
 
-
+/* Alerta */
     
-    /*Estado Modal */
+/*Estado Modal */
     const [agregarModal, setAgregarModal] = useState(false);
 
     const openAndCloseModalAgregar = () =>{
 
         setAgregarModal(!agregarModal);
-    }
+    };
 
     const [editModal, setEditModal] = useState(false);
 
     const openAndCloseModalEdit = () =>{
 
         setEditModal(!editModal);
-    }
+    };
+
+
+    const [deleteModal, setDeleteModal] = useState(false);
+
+    const openAndCloseModalDelete = () =>{
+
+        setDeleteModal(!deleteModal);
+    };
+/*Estado Modal */   
     
-    /*Estilo Modal */
+/*Estilo Modal */
     const style = {
         position: 'absolute',
         top: '50%',
@@ -185,18 +208,19 @@ const Clientes = () => {
         boxShadow: 24,
         p: 4,
       };
-      
+/*Estilo Modal */ 
 
 
 
-    /*Declaramos columnas de la tabla*/
+/*Declaramos columnas de la tabla*/
     const columns = [
         { field: 'Id', headerName: 'ID' ,width: 70},
         { field: 'NombreCliente', headerName: 'Nombre Cliente',width: 170 },
         { field: 'Cedula', headerName: 'Cedula',width: 170 },
         { field: 'Membresia', headerName: 'Membresia',width: 170 } ,
+/*Declaramos columnas de la tabla*/
 
-        /* Renderisamos botones en la Tabla */
+/* Renderisamos botones en la Tabla */
         { field: 'Acciones',width: 120,
             renderCell:(rowValue) =>{
                 return(
@@ -225,6 +249,7 @@ const Clientes = () => {
                 )
             }
         }
+/* Renderisamos botones en la Tabla */
       ];
 
 
@@ -233,15 +258,17 @@ const Clientes = () => {
 
 
     return (
-        /* */
+        /*Grid*/
         <div style={{ height: 625, width: '100%' }}>
             <h1>Clientes</h1>
             <hr/>
             <br/>
 
-          
+            {/*Alerta*/}
             <ToastContainer />
+
             <Grid container>
+            {/* Agregar Cliente boton*/}
                 <Button 
                 variant="contained" 
                 color="success" 
@@ -251,6 +278,7 @@ const Clientes = () => {
                     Agregar
                 </Button>
  
+                {/* EAgregar Cliente Modal*/}
                 <Modal
                     open={agregarModal}
                     onClose={openAndCloseModalAgregar}
@@ -313,7 +341,7 @@ const Clientes = () => {
                     </Box>
                     </Modal> 
 
-
+                    {/* Editar Cliente Modal*/}
                     <Modal
                     open={editModal}
                     onClose={openAndCloseModalEdit}
@@ -372,12 +400,36 @@ const Clientes = () => {
                                 
                             </ButtonGroup>
                             </div>
-                        
-                        </form>
-                            
+                        </form> 
                     </Box>
                     </Modal>
  
+                    {/* Eliminar Cliente Modal*/}
+
+                    <Modal
+                    open={deleteModal}
+                    onClose={openAndCloseModalDelete}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    >
+                    <Box sx={style}>
+                            <h1>Eliminar Cliente</h1>
+                            <hr/>
+                            <h3>Estas Seguro Que Desea Eliminar el cliente ?</h3>
+                            {}
+
+                            <br/>
+                            <br/>
+                            <div align =" right">
+                            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                                <Button color="success"  >Eliminar</Button>
+                                <Button color="error"  onClick={()=> openAndCloseModalDelete()}>Cancelar</Button>
+                                
+                            </ButtonGroup>
+                            </div>
+                        
+                    </Box>
+                    </Modal>
 
             </Grid>
 
