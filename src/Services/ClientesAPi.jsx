@@ -28,6 +28,7 @@ export const getClientesById = async (id) =>{
     )
 };
 
+
 export const postCliente = async (cliente) =>{
 
     try{
@@ -36,12 +37,7 @@ export const postCliente = async (cliente) =>{
         
             await api.post('/Cliente',cliente).catch(function (error) {
            
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-          alert(error.response.data);
-          console.log(error.toJSON());
-    
+                alert(error.response.data);
           })  )
     }
     catch{
@@ -49,8 +45,24 @@ export const postCliente = async (cliente) =>{
         alert("error");
 
     }
-
     
-}
+};
 
+export const putCliente = async (id,cliente) =>
+{
+
+ try {   
+        return(
+
+            await api.put('/Cliente/id:'+id,cliente).catch(function (error) {alert(error.response.data);})  
+        );
+    
+    } 
+
+    catch{
+
+        alert("error");
+
+    }
+};
 

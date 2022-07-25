@@ -48,22 +48,14 @@ const Clientes = () => {
     const agregarClientes = (cli) =>{
 
         try
-        { 
-            
+         {  
             postCliente(cli).then( res =>
             {
                 openAndCloseModalAgregar()
             })
-
             
-
-            alert("Cliente Agregado")
-
+                  
             
-                window.location.reload();
-                openAndCloseAlert()
-           
-
         }
 
 
@@ -74,6 +66,11 @@ const Clientes = () => {
         
         
           
+    };
+
+    const editClientes =() =>{
+
+        
     }
 
     const onSubmitAdd = data => {
@@ -91,8 +88,9 @@ const Clientes = () => {
     /*Eventos Click eliminar y Editar  */
     const handleEditClick =( event, cellValue)=>{
 
+        openAndCloseModalEdit()
         getClientesById(cellValue.row.Id).then( (res) =>{
-            
+            console.log(res.data)
         })
         
 
@@ -200,7 +198,7 @@ const Clientes = () => {
 
     return (
         /* */
-        <div style={{ height: 600, width: '100%' }}>
+        <div style={{ height: 625, width: '100%' }}>
             <h1>Clientes</h1>
             <hr/>
             <br/>
@@ -279,70 +277,14 @@ const Clientes = () => {
                     </Box>
                     </Modal>
 
-                    <Modal
-                    open={editModal}
-                    onClose={openAndCloseModalEdit }
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                    >
-                    <Box sx={style}>
-                        <form onSubmit={handleSubmit(onSubmitAdd)}>
-                            <h3> Agregar Cliente</h3>
-                            <hr/>
-                            <TextField
-                            required
-                            id="outlined-required"
-                            label="Nombre Cliente"
-                            name="NombreCliente"
-                            defaultValue=""
-                            {...register("EditarNombreCliente",{required:true})}
-                            />
-                            {errors.NombreCliente?.type ==='required' && "El Campo es requerido."}
-                            <br/>
-                            <br/>
-                            <TextField
-                            required
-                            id="outlined-required"
-                            label="Cedula"
-                            name="Cedula"
-                            defaultValue=""
-                            {...register("EditarCedula",{required:true})}
-                            />
-                            {errors.Cedula?.type ==='required' && "El Campo es requerido."}
-                            <br/>
-                            <br/>
-                            <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Membresia</InputLabel>
-                                <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={membresia}
-                                name="EditarMembresia"
-                                label="EditarMembresia"
-                                {...register("EditarMembresia",{required:true})}
-                                onChange={handleChangemembresia}
-                                >
-                                    <MenuItem value={'Premium'}>Premium</MenuItem>
-                                    <MenuItem value={'Super'}>Super</MenuItem>
-                                    <MenuItem value={'Regular'}>Regular</MenuItem>
-                                </Select>
-                            </FormControl>
-                            {errors.Membresia?.type ==='required' && "El Campo es requerido."}
-                            <br/>
-                            <br/>
-                            <div align =" right">
-                            <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                <Button color="success" type="submit" >Editar</Button>
-                                <Button color="error"  onClick={()=> openAndCloseModalEdit()}>Cancelar</Button>
-                                
-                            </ButtonGroup>
-                            </div>
-                        </form>
-                    </Box>
-                    </Modal>
 
+                    
 
             </Grid>
+
+
+           
+                    
 
             <br/>
                 <div style={{ display: 'flex', height: '100%' }}>
