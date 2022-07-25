@@ -10,7 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {getClientes, getClientesById, postCliente,putCliente} from '../../Services/ClientesAPi'
+import {getClientes, getClientesById, postCliente,putCliente,deleteClientes} from '../../Services/ClientesAPi'
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -67,7 +67,7 @@ const Clientes = () => {
             alert("Error")
         }
         
-        
+       
           
     };
 /* Agregar CLiente */
@@ -91,6 +91,8 @@ const Clientes = () => {
         
         })
 
+        
+        
     }
 
     const onSubmitAdd = data => {
@@ -107,10 +109,28 @@ const Clientes = () => {
         
 
     };
+
+    
 /* Editar CLiente */
 
 
 /* Eliminar CLiente */
+
+const [eliminarCliente, setEliminarCliente] = useState()
+
+const deleteCliente =() =>{
+
+    deleteClientes(eliminarCliente).then(res =>{
+        openAndCloseModalDelete()
+        notifySuccess("Cliente Eliminado Correcto!")
+        console.log("Cliente Eliminado Correcto!")
+        
+    })
+
+    
+};
+
+
 
 /* Eliminar CLiente */  
 
@@ -132,15 +152,10 @@ const Clientes = () => {
     };
 
     const handleDeleteClick =( event, cellValue)=>{
+
         openAndCloseModalDelete()
-
-        getClientesById(cellValue.row.Id).then( (res) =>{
-        
-
-            
-        })
-        
-        console.log("Eliminando "+ cellValue.row.Id)
+        setEliminarCliente(cellValue.row.Id)
+ 
     };
 
 /*Eventos Click eliminar y Editar  */
@@ -162,7 +177,7 @@ const Clientes = () => {
 
     const notifySuccess = (text) => toast.success(text, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -422,7 +437,7 @@ const Clientes = () => {
                             
                             <div align =" right">
                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                <Button color="error"  >Eliminar</Button>
+                                <Button color="error" onClick={()=>deleteCliente()} >Eliminar</Button>
                                 <Button color="info"  onClick={()=> openAndCloseModalDelete()}>Cancelar</Button>
                                 
                             </ButtonGroup>
