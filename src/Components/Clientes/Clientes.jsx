@@ -11,9 +11,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {getClientes, getClientesById, postCliente,putCliente} from '../../Services/ClientesAPi'
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useParams } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Clientes = () => {
     const {id} = useParams();
@@ -55,6 +56,8 @@ const Clientes = () => {
             postCliente(cli).then( res =>
             {
                 openAndCloseModalAgregar()
+                notify("Cliente Agregado Correcto!")
+                console.log("Cliente Agregado Correcto!")
             })
             
                   
@@ -82,13 +85,19 @@ const Clientes = () => {
 
     const editClientes =(id,cliente) =>{
 
-        putCliente(id,cliente).then(res =>{openAndCloseModalEdit()})
+        putCliente(id,cliente).then(res =>{
+        openAndCloseModalEdit()
+        notify("Cliente Editado Correcto!")
+        console.log("Cliente Editado Correctamente")
+        
+        })
 
     }
 
     const onSubmitAdd = data => {
         setAgregarCiente(data) 
-        agregarClientes(data); 
+        agregarClientes(data);
+       
         
     };
 
@@ -139,6 +148,8 @@ const Clientes = () => {
     };
 
     /* Alerta */
+
+    const notify = (text) => toast(text);
 
     const [alert, setAlert] = useState(false);
     
@@ -229,8 +240,8 @@ const Clientes = () => {
             <hr/>
             <br/>
 
-            {alert && <Alert onClose={()=>openAndCloseAlert()} severity="success">El usuario Se agregado Correctamente</Alert>}
-
+          
+            <ToastContainer />
             <Grid container>
                 <Button 
                 variant="contained" 
@@ -240,7 +251,7 @@ const Clientes = () => {
                 >
                     Agregar
                 </Button>
-{/* 
+ 
                 <Modal
                     open={agregarModal}
                     onClose={openAndCloseModalAgregar}
@@ -301,7 +312,7 @@ const Clientes = () => {
                             </div>
                         </form>
                     </Box>
-                    </Modal> */}
+                    </Modal> 
 
 
                     <Modal
