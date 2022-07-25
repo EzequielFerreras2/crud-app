@@ -419,11 +419,11 @@ const Clientes = () => {
                             {}
 
                             <br/>
-                            <br/>
+                            
                             <div align =" right">
                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                <Button color="success"  >Eliminar</Button>
-                                <Button color="error"  onClick={()=> openAndCloseModalDelete()}>Cancelar</Button>
+                                <Button color="error"  >Eliminar</Button>
+                                <Button color="info"  onClick={()=> openAndCloseModalDelete()}>Cancelar</Button>
                                 
                             </ButtonGroup>
                             </div>
