@@ -84,15 +84,13 @@ const Clientes = () => {
     }
 
     const onSubmitAdd = data => {
-        setAgregarCiente(data) 
+         
         agregarClientes(data);
        
         
     };
 
-    const onSubmitEdit = async (data) => {
-
-        await setEditCliente(data);
+    const onSubmitEdit = async (data) => {  
         editClientes(data.id,data)
         
 
