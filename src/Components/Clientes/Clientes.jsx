@@ -37,13 +37,7 @@ const Clientes = () => {
 
 
 /* Agregar CLiente */
-    const [agregarCiente, setAgregarCiente] = useState({
 
-        NombreCLiente:"",
-        Cedula:"",
-        Membresia:""
-
-    });
 
     const { register, handleSubmit,  formState: { errors },setValue } = useForm();
 
@@ -74,14 +68,7 @@ const Clientes = () => {
 /* Agregar CLiente */
 
 /* Editar CLiente */
-    const [editCliente, setEditCliente] = useState({
 
-        id:"",
-        NombreCliente:"",
-        Cedula:"",
-        Membresia:""
-
-    });
 
     const editClientes =(id,cliente) =>{
 
@@ -110,9 +97,6 @@ const Clientes = () => {
         
 
     };
-
-    
-/* Editar CLiente */
 
 
 /* Eliminar CLiente */
