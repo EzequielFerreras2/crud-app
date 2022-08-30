@@ -135,7 +135,7 @@ const deleteCliente =() =>{
     };
 
     const handleDeleteClick =( event, cellValue)=>{
-
+        openAndCloseModalDelete()
         setEliminarCliente(cellValue.row.Id)
 
  
