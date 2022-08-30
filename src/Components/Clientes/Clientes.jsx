@@ -97,9 +97,6 @@ const Clientes = () => {
 
     };
 
-    
-/* Editar CLiente */
-
 
 /* Eliminar CLiente */
 
