@@ -14,6 +14,7 @@ import {getClientes, getClientesById, postCliente,putCliente,deleteClientes} fro
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DeleteModal from './DeleteModal';
 
 const Clientes = () => {
 
@@ -153,8 +154,8 @@ const deleteCliente =() =>{
 
     const handleDeleteClick =( event, cellValue)=>{
 
-        openAndCloseModalDelete()
         setEliminarCliente(cellValue.row.Id)
+
  
     };
 
@@ -257,8 +258,6 @@ const deleteCliente =() =>{
                     >
                     <DeleteIcon />
                     </IconButton>
-
-
                     </>
                     
                 )
