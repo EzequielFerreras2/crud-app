@@ -85,6 +85,7 @@ const Clientes = () => {
 
     const onSubmitAdd = data => {
          
+        console.log(data);
         agregarClientes(data);
        
         
@@ -127,6 +128,10 @@ const deleteCliente =() =>{
             setValue("NombreCliente", res.data.NombreCliente)
             setValue("Cedula", res.data.Cedula)
             setValue("Membresia", res.data.Membresia)
+            setValue("Grupo", res.data.Grupo)
+            setValue("Credito", res.data.Credito)
+            setValue("Estatus", res.data.Estatus)
+            setValue("FechaIngreso", res.data.FechaIngreso)
             
         })
         
@@ -147,6 +152,9 @@ const deleteCliente =() =>{
     const [membresia, setMembresia] = useState('');
 /* Estado Membresia*/
 
+/* Estado Membresia*/
+const [estado, setEstado] = useState('');
+/* Estado Membresia*/
 
 /* Cambio Estado Membresia */
 
@@ -154,6 +162,14 @@ const deleteCliente =() =>{
         setMembresia(event.target.value);
         
     };
+/* Cambio Estado Membresia */
+
+/* Cambio Estado Membresia */
+
+const handleChangeEstado =(event) =>{
+    setEstado(event.target.value);
+    
+};
 /* Cambio Estado Membresia */
 
 /* Alerta */
@@ -212,10 +228,14 @@ const deleteCliente =() =>{
 
 /*Declaramos columnas de la tabla*/
     const columns = [
-        { field: 'Id', headerName: 'ID' ,width: 70},
-        { field: 'NombreCliente', headerName: 'Nombre Cliente',width: 170 },
-        { field: 'Cedula', headerName: 'Cedula',width: 170 },
-        { field: 'Membresia', headerName: 'Membresia',width: 170 } ,
+        { field: 'Id', headerName: 'ID' ,width: 50},
+        { field: 'NombreCliente', headerName: 'Nombre Cliente',width: 200 },
+        { field: 'Cedula', headerName: 'Cedula',width: 120 },
+        { field: 'Membresia', headerName: 'Membresia',width: 100 } ,
+        { field: 'Grupo', headerName: 'Grupo',width: 60 } ,
+        { field: 'Estatus', headerName: 'Estado',width: 100 } ,
+        { field: 'Credito', headerName: 'Credito',width: 170 } ,
+        { field: 'FechaIngreso', headerName: 'Fecha Ingreso',width: 170 } ,
 /*Declaramos columnas de la tabla*/
 
 /* Renderisamos botones en la Tabla */
@@ -307,6 +327,41 @@ const deleteCliente =() =>{
                             {errors.Cedula?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Grupo"
+                            name="Grupo"
+                            defaultValue=""
+                            {...register("Grupo",{required:true})}
+                            />
+                            {errors.Grupo?.type ==='required' && "El Campo es requerido."}
+                            <br/>
+                            <br/>
+
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Credito"
+                            name="Credito"
+                            defaultValue=""
+                            {...register("Credito",{required:true})}
+                            />
+                            {errors.Credito?.type ==='required' && "El Campo es requerido."}
+                            <br/>
+                            <br/>
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Fecha Ingreso"
+                            name="FechaIngreso"
+                            defaultValue=""
+                            {...register("FechaIngreso",{required:true})}
+                            />
+                            {errors.FechaIngreso?.type ==='required' && "El Campo es requerido."}
+                            <br/>
+                            <br/>
+
                             <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Membresia</InputLabel>
                                 <Select
@@ -324,6 +379,25 @@ const deleteCliente =() =>{
                                 </Select>
                             </FormControl>
                             {errors.Membresia?.type ==='required' && "El Campo es requerido."}
+                            <br/>
+                            <br/>
+                            <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Grupo</InputLabel>
+                                <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={estado}
+                                name="Estado"
+                                label="Estado"
+                                {...register("Estado",{required:true})}
+                                onChange={handleChangeEstado}
+                                >
+                                    <MenuItem value={'true'}>Activo</MenuItem>
+                                    <MenuItem value={'false'}>Inactivo</MenuItem>
+                                  
+                                </Select>
+                            </FormControl>
+                            {errors.Estado?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
                             <div align =" right">
@@ -347,8 +421,8 @@ const deleteCliente =() =>{
                     <Box sx={style}>
                         <form onSubmit={handleSubmit(onSubmitEdit)}>
                         <h3> Editar Cliente</h3>
-                            <hr/>
-                            <TextField
+                        <br/>
+                        <TextField
                             required
                             id="outlined-required"
                             label="Nombre Cliente"
@@ -356,7 +430,7 @@ const deleteCliente =() =>{
                             defaultValue=""
                             {...register("NombreCliente",{required:true})}
                             />
-                            
+                            {errors.NombreCliente?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
                             <TextField
@@ -367,9 +441,45 @@ const deleteCliente =() =>{
                             defaultValue=""
                             {...register("Cedula",{required:true})}
                             />
-                            
+                            {errors.Cedula?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Grupo"
+                            name="Grupo"
+                            defaultValue=""
+                            {...register("Grupo",{required:true})}
+                            />
+                            {errors.Grupo?.type ==='required' && "El Campo es requerido."}
+                            <br/>
+                            <br/>
+
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Credito"
+                            name="Credito"
+                            defaultValue=""
+                            inputProps={{ inputMode: 'numeric'}}
+                            {...register("Credito",{required:true})}
+                            />
+                            {errors.Saldo?.type ==='required' && "El Campo es requerido."}
+                            <br/>
+                            <br/>
+                            <TextField
+                            required
+                            id="outlined-required"
+                            label="Fecha Ingreso"
+                            name="FechaIngreso"
+                            defaultValue=""
+                            {...register("FechaIngreso",{required:true})}
+                            />
+                            {errors.FechaIngreso?.type ==='required' && "El Campo es requerido."}
+                            <br/>
+                            <br/>
+
                             <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Membresia</InputLabel>
                                 <Select
@@ -386,7 +496,26 @@ const deleteCliente =() =>{
                                     <MenuItem value={'Regular'}>Regular</MenuItem>
                                 </Select>
                             </FormControl>
-                            
+                            {errors.Membresia?.type ==='required' && "El Campo es requerido."}
+                            <br/>
+                            <br/>
+                            <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Grupo</InputLabel>
+                                <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={estado}
+                                name="Estado"
+                                label="Estado"
+                                {...register("Estado",{required:true})}
+                                onChange={handleChangeEstado}
+                                >
+                                    <MenuItem value={'true'}>Activo</MenuItem>
+                                    <MenuItem value={'false'}>Inactivo</MenuItem>
+                                  
+                                </Select>
+                            </FormControl>
+                            {errors.Estado?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
                             <div align =" right">
