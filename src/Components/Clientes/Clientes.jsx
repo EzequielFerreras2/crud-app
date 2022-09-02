@@ -233,8 +233,8 @@ const handleChangeEstado =(event) =>{
         { field: 'Cedula', headerName: 'Cedula',width: 120 },
         { field: 'Membresia', headerName: 'Membresia',width: 100 } ,
         { field: 'Grupo', headerName: 'Grupo',width: 60 } ,
-        { field: 'Estatus', headerName: 'Estado',width: 100 } ,
-        { field: 'Credito', headerName: 'Credito',width: 170 } ,
+        { field: 'Estatus', headerName: 'Estado',width: 100, type:'boolean'} ,
+        { field: 'Credito', headerName: 'Credito',width: 100 ,type: 'number'} ,
         { field: 'FechaIngreso', headerName: 'Fecha Ingreso',width: 200, type: 'dateTime', valueGetter: ({ value }) => value && new Date(value) } ,
 /*Declaramos columnas de la tabla*/
 
@@ -341,6 +341,7 @@ const handleChangeEstado =(event) =>{
 
                             <TextField
                             required
+                            type="number"
                             id="outlined-required"
                             label="Credito"
                             name="Credito"
@@ -390,7 +391,7 @@ const handleChangeEstado =(event) =>{
                                 value={estado}
                                 name="Estado"
                                 label="Estado"
-                                {...register("Estado",{required:true})}
+                                {...register("Estatus",{required:true})}
                                 onChange={handleChangeEstado}
                                 >
                                     <MenuItem value={'true'}>Activo</MenuItem>
@@ -509,11 +510,11 @@ const handleChangeEstado =(event) =>{
                                 value={estado}
                                 name="Estado"
                                 label="Estado"
-                                {...register("Estado",{required:true})}
+                                {...register("Estatus",{required:true})}
                                 onChange={handleChangeEstado}
                                 >
-                                    <MenuItem value={'true'}>Activo</MenuItem>
-                                    <MenuItem value={'false'}>Inactivo</MenuItem>
+                                    <MenuItem value={true}>Activo</MenuItem>
+                                    <MenuItem value={false}>Inactivo</MenuItem>
                                   
                                 </Select>
                             </FormControl>
