@@ -235,7 +235,7 @@ const handleChangeEstado =(event) =>{
         { field: 'Grupo', headerName: 'Grupo',width: 60 } ,
         { field: 'Estatus', headerName: 'Estado',width: 100 } ,
         { field: 'Credito', headerName: 'Credito',width: 170 } ,
-        { field: 'FechaIngreso', headerName: 'Fecha Ingreso',width: 170 } ,
+        { field: 'FechaIngreso', headerName: 'Fecha Ingreso',width: 200, type: 'dateTime', valueGetter: ({ value }) => value && new Date(value) } ,
 /*Declaramos columnas de la tabla*/
 
 /* Renderisamos botones en la Tabla */
@@ -351,6 +351,7 @@ const handleChangeEstado =(event) =>{
                             <br/>
                             <br/>
                             <TextField
+                            type="date"
                             required
                             id="outlined-required"
                             label="Fecha Ingreso"
@@ -469,6 +470,7 @@ const handleChangeEstado =(event) =>{
                             <br/>
                             <br/>
                             <TextField
+                            type="date"
                             required
                             id="outlined-required"
                             label="Fecha Ingreso"
