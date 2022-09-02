@@ -10,7 +10,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {getClientes, getClientesById, postCliente,putCliente,deleteClientes} from '../../Services/ClientesAPi'
+import {getClientes, getClientesById, postCliente,putCliente,deleteClientes} from '../../Services/ClientesAPi';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -153,7 +157,7 @@ const deleteCliente =() =>{
 /* Estado Membresia*/
 
 /* Estado Membresia*/
-const [estado, setEstado] = useState('');
+const [estatus, setEstatus] = useState('');
 /* Estado Membresia*/
 
 /* Cambio Estado Membresia */
@@ -167,12 +171,12 @@ const [estado, setEstado] = useState('');
 /* Cambio Estado Membresia */
 
 const handleChangeEstado =(event) =>{
-    setEstado(event.target.value);
+    setEstatus(event.target.value);
     
 };
 /* Cambio Estado Membresia */
 
-/* Alerta */
+/* Alerta */ 
 
     const notifySuccess = (text) => toast.success(text, {
         position: "top-right",
@@ -383,25 +387,41 @@ const handleChangeEstado =(event) =>{
                             {errors.Membresia?.type ==='required' && "El Campo es requerido."}
                             <br/>
                             <br/>
-                            <FormControl fullWidth>
+                            {/* <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Grupo</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={estado}
-                                name="Estado"
+                                value={estatus}
+                                name="Estatus"
                                 label="Estado"
                                 {...register("Estatus",{required:true})}
                                 onChange={handleChangeEstado}
                                 >
-                                    <MenuItem value={'true'}>Activo</MenuItem>
-                                    <MenuItem value={'false'}>Inactivo</MenuItem>
+                                    <MenuItem value={true}>Activo</MenuItem>
+                                    <MenuItem value={false}>Inactivo</MenuItem>
                                   
                                 </Select>
                             </FormControl>
                             {errors.Estado?.type ==='required' && "El Campo es requerido."}
                             <br/>
-                            <br/>
+                            <br/> */}
+                            <FormControl>
+                            <FormLabel id="demo-radio-buttons-group-label">Estatus</FormLabel>
+                                <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue={true}
+                                    name="Estatus"
+                                    value={estatus}
+                                    {...register("Estatus",{required:true})}
+                                onChange={handleChangeEstado}
+                                >
+                                    <FormControlLabel value={true}control={<Radio value={true}/>} label="Activo" />
+                                    <FormControlLabel value={false}control={<Radio value={false} />} label="Inactivo" />
+                                    
+                                </RadioGroup>
+                            </FormControl>
+
                             <div align =" right">
                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                                 <Button color="success" type="submit" >Agregar</Button>
@@ -507,8 +527,8 @@ const handleChangeEstado =(event) =>{
                                 <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={estado}
-                                name="Estado"
+                                value={estatus}
+                                name="Estatus"
                                 label="Estado"
                                 {...register("Estatus",{required:true})}
                                 onChange={handleChangeEstado}
